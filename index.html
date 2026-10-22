@@ -17,14 +17,16 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:1rem/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
 main,header,footer{max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+main>.mobile-section{display:none}
 header{padding-top:3.5rem}
 h1{font-size:1.9rem;line-height:1.2;margin:0 0 .25rem}
-h2{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:3rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid var(--rule)}
+h2{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:3rem 0 1rem;padding-bottom:.4rem}
 h3{font-size:1.05rem;margin:0}
 p{margin:.5rem 0}
 a{color:var(--link);text-underline-offset:2px}
 a:focus-visible{outline:2px solid var(--link);outline-offset:2px}
 .role{color:var(--muted);margin:0}
+.nowrap{white-space:nowrap}
 nav ul,.links{list-style:none;padding:0;margin:1rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem 1.25rem}
 article{margin:0 0 2rem}
 .meta{color:var(--muted);font-size:.9rem;margin:.15rem 0 .4rem}
@@ -34,11 +36,19 @@ ul.points li{margin:.25rem 0}
 .links{margin-top:.5rem;font-size:.92rem}
 dl{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.25rem;margin:0}
 dt{font-weight:600}dd{margin:0}
-.project-nav{position:fixed;z-index:2;top:50%;left:clamp(1rem,8vw,6rem);transform:translateY(-50%);display:grid;gap:.35rem}
-.project-nav h2{border:0;margin:0;padding:0 0 .2rem;font-size:.7rem}
+.project-nav{margin:1.5rem 0 0}
+.project-nav summary{cursor:pointer;list-style:none}
+.project-nav summary::-webkit-details-marker{display:none}
+.project-nav summary h2{display:inline-block;position:relative;margin:0;padding:.35rem 0 .35rem 1.75rem;color:var(--link);line-height:1.2}
+.project-nav summary h2::before{content:"›";position:absolute;left:0;font-size:1.15rem;line-height:.8;transform:rotate(0deg);transition:transform 160ms ease-out}
+.project-nav[open] summary h2::before{transform:rotate(90deg)}
+.project-list{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.35rem 1rem;padding-left:1.75rem}
 .project-button{border:0;background:transparent;color:var(--muted);cursor:pointer;font:inherit;font-size:.85rem;padding:.2rem 0;text-align:left;transition:color 160ms ease-out,transform 160ms ease-out}
 .project-button:hover,.project-button:focus-visible{color:var(--fg)}
 .project-button:active{transform:scale(.97)}
+.desktop-project-nav{position:fixed;z-index:2;top:50%;left:clamp(1rem,8vw,6rem);transform:translateY(-50%);display:grid;gap:.35rem}
+.desktop-project-nav h2{border:0;margin:0;padding:0 0 .2rem;font-size:.7rem}
+.desktop-project-nav .project-list{display:grid;gap:.35rem;padding:0}
 .profile-nav{position:fixed;z-index:2;top:50%;right:clamp(1rem,8vw,6rem);transform:translateY(-50%);width:12rem}
 .profile-nav section{margin:0 0 2rem}
 .profile-nav h2{margin:0 0 1rem;border:0;padding:0;font-size:.7rem}
@@ -46,19 +56,23 @@ dt{font-weight:600}dd{margin:0}
 .profile-nav dt{margin-top:.75rem}
 .profile-nav dd{color:var(--muted)}
 .profile-nav p{font-size:.85rem}
-dialog{width:min(34rem,calc(100% - 2rem));border:1px solid var(--rule);border-radius:.75rem;background:var(--bg);color:var(--fg);padding:0;box-shadow:0 1.5rem 4rem #0000002b}
+dialog{width:min(34rem,calc(100% - 2rem));max-height:calc(100vh - 2rem);overflow:auto;border:1px solid var(--rule);border-radius:.75rem;background:var(--bg);color:var(--fg);padding:0;box-shadow:0 1.5rem 4rem #0000002b}
 dialog::backdrop{background:#00000055;backdrop-filter:blur(2px)}
-.project-detail{padding:1.5rem}
+.project-detail{padding:clamp(1.25rem,4vw,2rem)}
 .project-detail h2{margin:0 2.5rem .35rem 0;border:0;padding:0;color:var(--fg);font-size:1.35rem;letter-spacing:0;text-transform:none}
-.project-detail .meta{margin-bottom:1rem}
-.project-detail .links{margin-top:1rem}
+.project-detail .meta{margin:0 0 1.25rem}
+.project-detail .points{display:grid;gap:.65rem;margin:1.25rem 0;padding-left:1.2rem}
+.project-detail .points li{margin:0;padding-left:.2rem}
+.project-detail .stack{margin:1.25rem 0 0;padding-top:1rem;border-top:1px solid var(--rule)}
+.project-detail .links{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin:1rem 0 0}
+.project-detail .links li{margin:0}
 .dialog-close{position:absolute;top:.9rem;right:.9rem;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:1.4rem;line-height:1;padding:.25rem}
 .dialog-close:hover,.dialog-close:focus-visible{color:var(--fg)}
 @media (prefers-reduced-motion:no-preference){dialog[open]{animation:dialog-in 180ms var(--ease-out)}}
 @keyframes dialog-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 @media (max-width:30rem){dl{grid-template-columns:1fr}dd{margin-bottom:.5rem}}
-@media (max-width:42rem){.project-nav{top:auto;right:1rem;bottom:1rem;left:1rem;transform:none;display:flex;align-items:center;overflow-x:auto;gap:.75rem}.project-nav h2{flex:none}.project-button{white-space:nowrap;text-align:center}}
-@media (max-width:64rem){.profile-nav{position:static;transform:none;width:auto;max-width:var(--max);margin:0 auto;padding:0 1.25rem}.profile-nav section{margin-top:3rem}.profile-nav dl{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.25rem}}
+@media (max-width:64rem){.desktop-project-nav,.profile-nav{display:none}main>.mobile-section{display:block}}
+@media (max-width:42rem){body{display:flex;flex-direction:column}header,main,footer{width:100%;margin-inline:0}.project-nav{padding-inline:1.25rem}.project-nav .project-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.15rem 1rem}.project-button{white-space:normal;text-align:left}main{order:2}footer{order:5}}
 footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padding-top:1rem;color:var(--muted);font-size:.85rem}
 .skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:var(--bg);padding:.5rem}
 @media print{a{color:inherit}h2{margin-top:1.5rem}footer{display:none}}
@@ -79,13 +93,33 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
   </nav>
 </header>
 
-<aside class="project-nav" aria-labelledby="project-nav-title">
-  <h2 id="project-nav-title">Projects</h2>
-  <button class="project-button" type="button" data-project="promptshield">PromptShield</button>
-  <button class="project-button" type="button" data-project="dja">Project DJA</button>
-  <button class="project-button" type="button" data-project="lemonade">Lemonade</button>
-  <button class="project-button" type="button" data-project="cisco">Cisco IOx MCP</button>
-  <button class="project-button" type="button" data-project="listrum">Listrum</button>
+<aside class="desktop-project-nav" aria-labelledby="desktop-projects-title">
+  <h2 id="desktop-projects-title">Projects</h2>
+  <div class="project-list">
+    <button class="project-button" type="button" data-project="promptshield">PromptShield</button>
+    <button class="project-button" type="button" data-project="dja">Project DJA</button>
+    <button class="project-button" type="button" data-project="lemonade">Lemonade</button>
+    <button class="project-button" type="button" data-project="cisco">Cisco IOx MCP</button>
+    <button class="project-button" type="button" data-project="listrum">Listrum</button>
+  </div>
+</aside>
+
+<aside class="profile-nav" aria-label="Skills and education">
+  <section>
+    <h2>Skills</h2>
+    <dl>
+      <dt>Languages</dt><dd>TypeScript, JavaScript, Python, SQL, Go</dd>
+      <dt>Frontend</dt><dd>React, Next.js, React Native, Webpack</dd>
+      <dt>Backend</dt><dd>Node.js, FastAPI, PostgreSQL, Supabase, Redis, Apache Airflow, CI/CD</dd>
+      <dt>AI</dt><dd>LangGraph, LLM agents, MCP, BigQuery</dd>
+      <dt>Testing</dt><dd>Jest, Vitest, JSON Schema (AJV)</dd>
+    </dl>
+  </section>
+  <section>
+    <h2>Education</h2>
+    <p><strong>Borough of Manhattan Community College</strong>, <span class="nowrap">A.S. Engineering Science</span></p>
+    <p><strong>University of Pennsylvania Coding Bootcamp</strong>, <span class="nowrap">Full Stack Web Development (MERN)</span></p>
+  </section>
 </aside>
 
 <dialog id="project-dialog" aria-labelledby="project-dialog-title">
@@ -97,10 +131,38 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
 </dialog>
 
 <main id="main">
+  <section class="mobile-section" aria-labelledby="education">
+    <h2 id="education">Education</h2>
+    <p><strong>Borough of Manhattan Community College</strong>, <span class="nowrap">A.S. Engineering Science</span></p>
+    <p><strong>University of Pennsylvania Coding Bootcamp</strong>, <span class="nowrap">Full Stack Web Development (MERN)</span></p>
+  </section>
+
   <section aria-labelledby="about">
     <h2 id="about">About</h2>
     <p>I build production conversational AI agents and the systems behind them, with a focus on architecture that scales and complexity that doesn't. I care about safety gates on anything an agent can write, and about frontends that load fast and stay simple.</p>
   </section>
+
+  <section class="mobile-section" aria-labelledby="skills">
+    <h2 id="skills">Skills</h2>
+    <dl>
+      <dt>Languages</dt><dd>TypeScript, JavaScript, Python, SQL, Go</dd>
+      <dt>Frontend</dt><dd>React, Next.js, React Native, Webpack</dd>
+      <dt>Backend</dt><dd>Node.js, FastAPI, PostgreSQL, Supabase, Redis, Apache Airflow, CI/CD</dd>
+      <dt>AI</dt><dd>LangGraph, LLM agents, MCP, BigQuery</dd>
+      <dt>Testing</dt><dd>Jest, Vitest, JSON Schema (AJV)</dd>
+    </dl>
+  </section>
+
+  <details class="project-nav mobile-section">
+    <summary><h2 id="project-nav-title">Projects</h2></summary>
+    <div class="project-list">
+      <button class="project-button" type="button" data-project="promptshield">PromptShield</button>
+      <button class="project-button" type="button" data-project="dja">Project DJA</button>
+      <button class="project-button" type="button" data-project="lemonade">Lemonade</button>
+      <button class="project-button" type="button" data-project="cisco">Cisco IOx MCP</button>
+      <button class="project-button" type="button" data-project="listrum">Listrum</button>
+    </div>
+  </details>
 
   <section aria-labelledby="experience">
     <h2 id="experience">Experience</h2>
@@ -130,24 +192,6 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
 
 </main>
 
-<aside class="profile-nav" aria-label="Skills and education">
-  <section aria-labelledby="skills">
-    <h2 id="skills">Skills</h2>
-    <dl>
-      <dt>Languages</dt><dd>TypeScript, JavaScript, Python, SQL, Go</dd>
-      <dt>Frontend</dt><dd>React, Next.js, React Native, Webpack</dd>
-      <dt>Backend</dt><dd>Node.js, FastAPI, PostgreSQL, Supabase, Redis, Apache Airflow, CI/CD</dd>
-      <dt>AI</dt><dd>LangGraph, LLM agents, MCP, BigQuery</dd>
-      <dt>Testing</dt><dd>Jest, Vitest, JSON Schema (AJV)</dd>
-    </dl>
-  </section>
-  <section aria-labelledby="education">
-    <h2 id="education">Education</h2>
-    <p><strong>Borough of Manhattan Community College</strong>, A.S. Engineering Science</p>
-    <p><strong>University of Pennsylvania Coding Bootcamp</strong>, Full Stack Web Development (MERN)</p>
-  </section>
-</aside>
-
 <footer>
   <p>© 2026 Dawan Sawyer</p>
 </footer>
@@ -156,12 +200,7 @@ const projectDetails = {
   promptshield: {
     title: "PromptShield",
     meta: "LLM security tooling · TypeScript CLI and Go gateway",
-    description: "A developer-first CLI that scans prompts, responses, and datasets for prompt injection, jailbreaks, PII leaks, and compliance violations using custom YAML RulePacks. Published to npm as @dawans/promptshield.",
-    points: [
-      "Companion Go enforcer sits behind Envoy to inspect and redact traffic inline",
-      "Three-tier progressive scanner so most requests never reach the expensive semantic analysis tier",
-      "Streaming design with constant memory and NATS for live policy updates"
-    ],
+    description: "A developer-first security toolkit that scans AI traffic and datasets for prompt injection, jailbreaks, PII leaks, and compliance violations.",
     stack: "TypeScript · Node.js · Go · Envoy · gRPC · PostgreSQL · Redis · NATS · OpenTelemetry",
     links: [
       ["CLI source", "https://github.com/Sawyer0/promptshield-mvp"],
@@ -171,24 +210,22 @@ const projectDetails = {
   },
   dja: {
     title: "Project DJA",
-    meta: "AI Innovation Challenge, Agentic AI track · Python",
-    description: "A compliance-aware AI academic advisor for CUNY students. Before the model suggests any course plan, a deterministic guardrail checks it against F-1 visa, TAP, and Pell credit rules.",
-    points: ["Guardrail is plain Python, not AI: failing plans are rejected before the LLM responds", "Built by BMCC students for CUNY students"],
+    meta: "CUNY Hackathon AI Innovation Challenge · Python",
+    description: "A compliance-aware AI academic advisor for CUNY students that validates course plans against visa and financial-aid requirements.",
     stack: "Python · LLM agents · rule-based guardrails",
     links: [["Source", "https://github.com/Sawyer0/ai-innovation-challenge_software-track"]]
   },
   lemonade: {
     title: "Lemonade",
     meta: "AI vehicle diagnostics · Next.js and React Native",
-    description: "A master technician in your pocket: diagnoses car problems over live video and chat, with a reactive safety gate in front of a layered reasoning pipeline.",
-    points: ["Next.js 15 App Router with real-time video over LiveKit", "Hybrid React Native app with on-device GGUF inference", "Gemini 2.5 Flash on Vertex AI, deployed on Cloud Run"],
+    description: "An AI vehicle diagnostics app that helps drivers understand car problems through live video and chat.",
     stack: "TypeScript · Next.js · React Native · Firebase · Vertex AI · LiveKit · Cloud Run",
     links: [["Source", "https://github.com/Sawyer0/lemonade"]]
   },
   cisco: {
-    title: "Cisco IOx Sandbox MCP Server",
+    title: "Cisco IOx MCP Server",
     meta: "Model Context Protocol server · Bun and TypeScript",
-    description: "Lets AI agents like Claude or Gemini manage Cisco DevNet IOx sandboxes: check and extend lab reservations, deploy and control containers, and stream logs and CPU/RAM usage into the chat.",
+    description: "An MCP server that lets AI agents manage Cisco DevNet IOx sandboxes, deployments, reservations, and runtime logs.",
     stack: "TypeScript · Bun · MCP · Docker · Cisco IOx",
     links: [["Source", "https://github.com/Sawyer0/ciscoiox-mcp"]]
   },
@@ -212,7 +249,6 @@ function showProject(projectId) {
   dialogContent.innerHTML = `
     <p class="meta">${project.meta}</p>
     <p>${project.description}</p>
-    ${project.points ? `<ul class="points">${project.points.map((point) => `<li>${point}</li>`).join("")}</ul>` : ""}
     <p class="stack">${project.stack}</p>
     <ul class="links">${project.links.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener">${label}</a></li>`).join("")}</ul>`;
   dialog.showModal();
