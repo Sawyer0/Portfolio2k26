@@ -4,7 +4,7 @@ Personal portfolio for Dawan Sawyer, Full Stack AI Developer.
 
 ## Design and performance choices
 
-- One hand-written `index.html`. No framework, no build step, no JavaScript.
+- One hand-written `index.html`. No framework and no build step; a small inline script powers the project detail dialog.
 - CSS is inlined in the `<head>`, so first paint needs exactly one request.
 - System font stack: no web-font download, no layout shift.
 - No images; the favicon is an inline SVG data URI.

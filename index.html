@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23111'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' text-anchor='middle' fill='%23fff'%3EDS%3C/text%3E%3C/svg%3E">
 <style>
-:root{--bg:#fff;--fg:#1a1a1a;--muted:#5c5c5c;--rule:#e2e2e2;--link:#0b57d0;--code:#f4f4f4;--max:44rem}
+:root{--bg:#fff;--fg:#1a1a1a;--muted:#5c5c5c;--rule:#e2e2e2;--link:#0b57d0;--code:#f4f4f4;--max:44rem;--ease-out:cubic-bezier(.23,1,.32,1)}
 @media (prefers-color-scheme:dark){:root{--bg:#121212;--fg:#e8e8e8;--muted:#a0a0a0;--rule:#2c2c2c;--link:#8ab4f8;--code:#1e1e1e}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -34,10 +34,35 @@ ul.points li{margin:.25rem 0}
 .links{margin-top:.5rem;font-size:.92rem}
 dl{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.25rem;margin:0}
 dt{font-weight:600}dd{margin:0}
+.project-nav{position:fixed;z-index:2;top:50%;left:clamp(1rem,8vw,6rem);transform:translateY(-50%);display:grid;gap:.35rem}
+.project-nav h2{border:0;margin:0;padding:0 0 .2rem;font-size:.7rem}
+.project-button{border:0;background:transparent;color:var(--muted);cursor:pointer;font:inherit;font-size:.85rem;padding:.2rem 0;text-align:left;transition:color 160ms ease-out,transform 160ms ease-out}
+.project-button:hover,.project-button:focus-visible{color:var(--fg)}
+.project-button:active{transform:scale(.97)}
+.profile-nav{position:fixed;z-index:2;top:50%;right:clamp(1rem,8vw,6rem);transform:translateY(-50%);width:12rem}
+.profile-nav section{margin:0 0 2rem}
+.profile-nav h2{margin:0 0 1rem;border:0;padding:0;font-size:.7rem}
+.profile-nav dl{display:block;font-size:.85rem}
+.profile-nav dt{margin-top:.75rem}
+.profile-nav dd{color:var(--muted)}
+.profile-nav p{font-size:.85rem}
+dialog{width:min(34rem,calc(100% - 2rem));border:1px solid var(--rule);border-radius:.75rem;background:var(--bg);color:var(--fg);padding:0;box-shadow:0 1.5rem 4rem #0000002b}
+dialog::backdrop{background:#00000055;backdrop-filter:blur(2px)}
+.project-detail{padding:1.5rem}
+.project-detail h2{margin:0 2.5rem .35rem 0;border:0;padding:0;color:var(--fg);font-size:1.35rem;letter-spacing:0;text-transform:none}
+.project-detail .meta{margin-bottom:1rem}
+.project-detail .links{margin-top:1rem}
+.dialog-close{position:absolute;top:.9rem;right:.9rem;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:1.4rem;line-height:1;padding:.25rem}
+.dialog-close:hover,.dialog-close:focus-visible{color:var(--fg)}
+@media (prefers-reduced-motion:no-preference){dialog[open]{animation:dialog-in 180ms var(--ease-out)}}
+@keyframes dialog-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 @media (max-width:30rem){dl{grid-template-columns:1fr}dd{margin-bottom:.5rem}}
+@media (max-width:42rem){.project-nav{top:auto;right:1rem;bottom:1rem;left:1rem;transform:none;display:flex;align-items:center;overflow-x:auto;gap:.75rem}.project-nav h2{flex:none}.project-button{white-space:nowrap;text-align:center}}
+@media (max-width:64rem){.profile-nav{position:static;transform:none;width:auto;max-width:var(--max);margin:0 auto;padding:0 1.25rem}.profile-nav section{margin-top:3rem}.profile-nav dl{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.25rem}}
 footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padding-top:1rem;color:var(--muted);font-size:.85rem}
 .skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:var(--bg);padding:.5rem}
 @media print{a{color:inherit}h2{margin-top:1.5rem}footer{display:none}}
+@media (prefers-reduced-motion:reduce){dialog[open]{animation:none}}
 </style>
 </head>
 <body>
@@ -49,78 +74,32 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
     <ul>
       <li><a href="https://github.com/sawyer0">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/dawan-s">LinkedIn</a></li>
-      <li><a href="mailto:dawansawyer@gmail.com">dawansawyer@gmail.com</a></li>
+      <li><a href="mailto:dawansawyer@gmail.com">Contact</a></li>
     </ul>
   </nav>
 </header>
+
+<aside class="project-nav" aria-labelledby="project-nav-title">
+  <h2 id="project-nav-title">Projects</h2>
+  <button class="project-button" type="button" data-project="promptshield">PromptShield</button>
+  <button class="project-button" type="button" data-project="dja">Project DJA</button>
+  <button class="project-button" type="button" data-project="lemonade">Lemonade</button>
+  <button class="project-button" type="button" data-project="cisco">Cisco IOx MCP</button>
+  <button class="project-button" type="button" data-project="listrum">Listrum</button>
+</aside>
+
+<dialog id="project-dialog" aria-labelledby="project-dialog-title">
+  <button class="dialog-close" type="button" aria-label="Close project details">×</button>
+  <div class="project-detail">
+    <h2 id="project-dialog-title"></h2>
+    <div id="project-dialog-content"></div>
+  </div>
+</dialog>
 
 <main id="main">
   <section aria-labelledby="about">
     <h2 id="about">About</h2>
     <p>I build production conversational AI agents and the systems behind them, with a focus on architecture that scales and complexity that doesn't. I care about safety gates on anything an agent can write, and about frontends that load fast and stay simple.</p>
-    <p>This site is one hand-written HTML file with inlined CSS, system fonts, and no JavaScript.</p>
-  </section>
-
-  <section aria-labelledby="projects">
-    <h2 id="projects">Selected projects</h2>
-
-    <article>
-      <h3>PromptShield</h3>
-      <p class="meta">LLM security tooling · TypeScript CLI and Go gateway</p>
-      <p>A developer-first CLI that scans prompts, responses, and datasets for prompt injection, jailbreaks, PII leaks, and compliance violations using custom YAML RulePacks. Published to npm as <code>@dawans/promptshield</code>.</p>
-      <ul class="points">
-        <li>Companion Go enforcer sits behind Envoy (ext_authz and gRPC ext_proc) to inspect and redact traffic inline</li>
-        <li>Three-tier progressive scanner: Aho-Corasick, then regex, then LLM semantic analysis, so most requests never reach the expensive tier</li>
-        <li>Streaming design with constant memory regardless of payload size; NATS for live policy updates across enforcers</li>
-      </ul>
-      <p class="stack">TypeScript · Node.js · Go · Envoy · gRPC · PostgreSQL · Redis · NATS · OpenTelemetry</p>
-      <ul class="links">
-        <li><a href="https://github.com/Sawyer0/promptshield-mvp">CLI source</a></li>
-        <li><a href="https://github.com/Sawyer0/promptshield-beta">Gateway source</a></li>
-        <li><a href="https://www.npmjs.com/package/@dawans/promptshield">npm</a></li>
-      </ul>
-    </article>
-
-    <article>
-      <h3>Project DJA</h3>
-      <p class="meta">AI Innovation Challenge, Agentic AI track · Python</p>
-      <p>A compliance-aware AI academic advisor for CUNY students. Before the model suggests any course plan, a deterministic guardrail checks it against F-1 visa, TAP, and Pell credit rules, so bad advice can't cost a student their status or aid.</p>
-      <ul class="points">
-        <li>Guardrail is plain Python, not AI: failing plans are rejected with a clear reason before the LLM responds</li>
-        <li>Built by BMCC students for CUNY students</li>
-      </ul>
-      <p class="stack">Python · LLM agents · rule-based guardrails</p>
-      <ul class="links"><li><a href="https://github.com/Sawyer0/ai-innovation-challenge_software-track">Source</a></li></ul>
-    </article>
-
-    <article>
-      <h3>Lemonade</h3>
-      <p class="meta">AI vehicle diagnostics · Next.js and React Native</p>
-      <p>A "master technician in your pocket": diagnoses car problems over live video and chat, with a reactive safety gate in front of a layered reasoning pipeline.</p>
-      <ul class="points">
-        <li>Next.js 15 App Router in strict TypeScript, real-time video over LiveKit (WebRTC)</li>
-        <li>Hybrid React Native (Expo, New Architecture) app with on-device GGUF inference via llama.rn</li>
-        <li>Gemini 2.5 Flash on Vertex AI with context caching, deployed on Cloud Run</li>
-      </ul>
-      <p class="stack">TypeScript · Next.js · React Native · Firebase · Vertex AI · LiveKit · Cloud Run</p>
-      <ul class="links"><li><a href="https://github.com/Sawyer0/lemonade">Source</a></li></ul>
-    </article>
-
-    <article>
-      <h3>Cisco IOx Sandbox MCP Server</h3>
-      <p class="meta">Model Context Protocol server · Bun and TypeScript</p>
-      <p>Lets AI agents like Claude or Gemini manage Cisco DevNet IOx sandboxes: check and extend lab reservations, deploy and control containers, and stream logs and CPU/RAM usage into the chat.</p>
-      <p class="stack">TypeScript · Bun · MCP · Docker · Cisco IOx</p>
-      <ul class="links"><li><a href="https://github.com/Sawyer0/ciscoiox-mcp">Source</a></li></ul>
-    </article>
-
-    <article>
-      <h3>Listrum landing page</h3>
-      <p class="meta">Marketing site · Next.js 16</p>
-      <p>Landing page for an edge network security concept, designed to read like a lab report.</p>
-      <p class="stack">TypeScript · Next.js 16 · Tailwind CSS 4 · Radix UI</p>
-      <ul class="links"><li><a href="https://cortexcli.vercel.app">Live site</a></li></ul>
-    </article>
   </section>
 
   <section aria-labelledby="experience">
@@ -149,6 +128,9 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
     </article>
   </section>
 
+</main>
+
+<aside class="profile-nav" aria-label="Skills and education">
   <section aria-labelledby="skills">
     <h2 id="skills">Skills</h2>
     <dl>
@@ -159,16 +141,91 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
       <dt>Testing</dt><dd>Jest, Vitest, JSON Schema (AJV)</dd>
     </dl>
   </section>
-
   <section aria-labelledby="education">
     <h2 id="education">Education</h2>
     <p><strong>Borough of Manhattan Community College</strong>, A.S. Engineering Science</p>
     <p><strong>University of Pennsylvania Coding Bootcamp</strong>, Full Stack Web Development (MERN)</p>
   </section>
-</main>
+</aside>
 
 <footer>
   <p>© 2026 Dawan Sawyer</p>
 </footer>
+<script>
+const projectDetails = {
+  promptshield: {
+    title: "PromptShield",
+    meta: "LLM security tooling · TypeScript CLI and Go gateway",
+    description: "A developer-first CLI that scans prompts, responses, and datasets for prompt injection, jailbreaks, PII leaks, and compliance violations using custom YAML RulePacks. Published to npm as @dawans/promptshield.",
+    points: [
+      "Companion Go enforcer sits behind Envoy to inspect and redact traffic inline",
+      "Three-tier progressive scanner so most requests never reach the expensive semantic analysis tier",
+      "Streaming design with constant memory and NATS for live policy updates"
+    ],
+    stack: "TypeScript · Node.js · Go · Envoy · gRPC · PostgreSQL · Redis · NATS · OpenTelemetry",
+    links: [
+      ["CLI source", "https://github.com/Sawyer0/promptshield-mvp"],
+      ["Gateway source", "https://github.com/Sawyer0/promptshield-beta"],
+      ["npm", "https://www.npmjs.com/package/@dawans/promptshield"]
+    ]
+  },
+  dja: {
+    title: "Project DJA",
+    meta: "AI Innovation Challenge, Agentic AI track · Python",
+    description: "A compliance-aware AI academic advisor for CUNY students. Before the model suggests any course plan, a deterministic guardrail checks it against F-1 visa, TAP, and Pell credit rules.",
+    points: ["Guardrail is plain Python, not AI: failing plans are rejected before the LLM responds", "Built by BMCC students for CUNY students"],
+    stack: "Python · LLM agents · rule-based guardrails",
+    links: [["Source", "https://github.com/Sawyer0/ai-innovation-challenge_software-track"]]
+  },
+  lemonade: {
+    title: "Lemonade",
+    meta: "AI vehicle diagnostics · Next.js and React Native",
+    description: "A master technician in your pocket: diagnoses car problems over live video and chat, with a reactive safety gate in front of a layered reasoning pipeline.",
+    points: ["Next.js 15 App Router with real-time video over LiveKit", "Hybrid React Native app with on-device GGUF inference", "Gemini 2.5 Flash on Vertex AI, deployed on Cloud Run"],
+    stack: "TypeScript · Next.js · React Native · Firebase · Vertex AI · LiveKit · Cloud Run",
+    links: [["Source", "https://github.com/Sawyer0/lemonade"]]
+  },
+  cisco: {
+    title: "Cisco IOx Sandbox MCP Server",
+    meta: "Model Context Protocol server · Bun and TypeScript",
+    description: "Lets AI agents like Claude or Gemini manage Cisco DevNet IOx sandboxes: check and extend lab reservations, deploy and control containers, and stream logs and CPU/RAM usage into the chat.",
+    stack: "TypeScript · Bun · MCP · Docker · Cisco IOx",
+    links: [["Source", "https://github.com/Sawyer0/ciscoiox-mcp"]]
+  },
+  listrum: {
+    title: "Listrum landing page",
+    meta: "Marketing site · Next.js 16",
+    description: "Landing page for an edge network security concept, designed to read like a lab report.",
+    stack: "TypeScript · Next.js 16 · Tailwind CSS 4 · Radix UI",
+    links: [["Live site", "https://cortexcli.vercel.app"]]
+  }
+};
+
+const dialog = document.querySelector("#project-dialog");
+const dialogTitle = document.querySelector("#project-dialog-title");
+const dialogContent = document.querySelector("#project-dialog-content");
+
+function showProject(projectId) {
+  const project = projectDetails[projectId];
+  if (!project) return;
+  dialogTitle.textContent = project.title;
+  dialogContent.innerHTML = `
+    <p class="meta">${project.meta}</p>
+    <p>${project.description}</p>
+    ${project.points ? `<ul class="points">${project.points.map((point) => `<li>${point}</li>`).join("")}</ul>` : ""}
+    <p class="stack">${project.stack}</p>
+    <ul class="links">${project.links.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener">${label}</a></li>`).join("")}</ul>`;
+  dialog.showModal();
+}
+
+document.querySelectorAll("[data-project]").forEach((button) => {
+  button.addEventListener("click", () => showProject(button.dataset.project));
+});
+
+document.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
+dialog.addEventListener("click", (event) => {
+  if (event.target === dialog) dialog.close();
+});
+</script>
 </body>
 </html>
