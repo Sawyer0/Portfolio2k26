@@ -171,21 +171,21 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
       <h3>Full Stack AI Developer, Gesture</h3>
       <p class="meta">Jun 2026 – Present · New York, NY</p>
       <ul class="points">
-        <li>Built a production conversational AI agent in LangGraph and FastAPI: ~20 single-purpose nodes, a shared typed state object, and a router that picks the re-entry point from conversation state</li>
-        <li>Designed a two-gate safety model on the agent's write path: two independent human approvals, enforced by graph edges and an in-node guard, with Redis distributed locking and post-write verification</li>
-        <li>Fixed a silent precision-loss bug on money fields and a pre-ranking row cap that corrupted top-N results in a Python and BigQuery campaign platform</li>
-        <li>Built an Airflow DAG for identity enrichment with idempotent re-runs, billing-aware error handling, and a cumulative global cap enforced against BigQuery</li>
+        <li>Shipped a production AI agent (LangGraph + FastAPI, ~20 nodes on shared state) used by ~15 marketers: ~1,150 conversations in a 4-week rollout, 93% resolved without human escalation at 3.4 LLM round-trips each</li>
+        <li>Ensured 0 duplicate or wrong writes during rollout: 2 independent human approvals per write via graph edges, an in-node guard, Redis distributed locking, and post-write verification</li>
+        <li>Protected budget reporting for ~170 contracts (~2,300 campaigns) by fixing a precision bug on endpoints serving ~550 req/day, preventing a ~$120/mo discrepancy, and fixing a row cap showing wrong top-10 rankings for 17 segments</li>
+        <li>Kept identity enrichment within budget via an Airflow DAG (~2,900 initial records) with idempotent reruns, billing error classification, and a global spend cap; dedupe saved ~$260 in repeat API charges</li>
       </ul>
     </article>
 
     <article>
-      <h3>Lead Architect / Full-Stack Engineer, PYE Education</h3>
+      <h3>Founding Engineer, PYE Education</h3>
       <p class="meta">Jan 2026 – Jun 2026 · Remote</p>
       <ul class="points">
-        <li>Led an infrastructure and frontend migration that stabilized production deploys and cut codebase complexity by 70%</li>
-        <li>Replaced 50+ hardcoded files with 4 reusable systems in a JSON-driven engine, so non-developers can create content</li>
-        <li>Cut the main JS bundle by 87% with code splitting and webpack prefetching, for near-instant navigation</li>
-        <li>Added standardized components and automated schema validation (AJV), making lesson development 5x faster</li>
+        <li>Led end-to-end infrastructure and frontend migration, stabilizing deployments and cutting codebase complexity 70%</li>
+        <li>Built a unified JSON-driven engine, replacing 50+ hardcoded files with 4 reusable systems for non-developer content creation</li>
+        <li>Optimized performance via code splitting and Webpack prefetching, reducing the main JS bundle 87% for near-instant navigation</li>
+        <li>Implemented standardized components and automated schema validation, preserving structural integrity while accelerating lesson creation 5x</li>
       </ul>
     </article>
   </section>
