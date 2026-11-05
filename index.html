@@ -109,7 +109,7 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
   <section>
     <h2>Skills</h2>
     <dl>
-      <dt>Languages</dt><dd>Python, TypeScript, JavaScript, SQL, Go</dd>
+      <dt>Languages</dt><dd>Python, C++, TypeScript, JavaScript, SQL, Go</dd>
       <dt>Frontend</dt><dd>React, Next.js, React Native, Webpack</dd>
       <dt>Backend</dt><dd>Node.js, FastAPI, PostgreSQL, Supabase, Redis, Apache Airflow, CI/CD</dd>
       <dt>AI</dt><dd>LangGraph, LLM agents, MCP, BigQuery</dd>
@@ -118,7 +118,7 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
   </section>
   <section>
     <h2>Education</h2>
-    <p><strong>Borough of Manhattan Community College</strong>, <span class="nowrap">A.S. Engineering Science</span></p>
+    <p><strong>Borough of Manhattan Community College</strong>, <span class="nowrap">A.S. Engineering Science (expected May 2028)</span></p>
     <p><strong>University of Pennsylvania Coding Bootcamp</strong>, <span class="nowrap">Full Stack Web Development (MERN)</span></p>
   </section>
 </aside>
@@ -134,7 +134,7 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
 <main id="main">
   <section class="mobile-section" aria-labelledby="education">
     <h2 id="education">Education</h2>
-    <p><strong>Borough of Manhattan Community College</strong>, <span class="nowrap">A.S. Engineering Science</span></p>
+    <p><strong>Borough of Manhattan Community College</strong>, <span class="nowrap">A.S. Engineering Science (expected May 2028)</span></p>
     <p><strong>University of Pennsylvania Coding Bootcamp</strong>, <span class="nowrap">Full Stack Web Development (MERN)</span></p>
   </section>
 
@@ -146,7 +146,7 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
   <section class="mobile-section" aria-labelledby="skills">
     <h2 id="skills">Skills</h2>
     <dl>
-      <dt>Languages</dt><dd>Python, TypeScript, JavaScript, SQL, Go</dd>
+      <dt>Languages</dt><dd>Python, C++, TypeScript, JavaScript, SQL, Go</dd>
       <dt>Frontend</dt><dd>React, Next.js, React Native, Webpack</dd>
       <dt>Backend</dt><dd>Node.js, FastAPI, PostgreSQL, Supabase, Redis, Apache Airflow, CI/CD</dd>
       <dt>AI</dt><dd>LangGraph, LLM agents, MCP, BigQuery</dd>
@@ -173,9 +173,9 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
       <p class="meta">Jun 2026 – Present · New York, NY</p>
       <ul class="points">
         <li>Shipped a production AI agent (LangGraph + FastAPI, ~20 nodes on shared state) used by ~15 marketers: ~1,150 conversations in a 4-week rollout, 93% resolved without human escalation at 3.4 LLM round-trips each</li>
-        <li>Ensured 0 duplicate or wrong writes during rollout: 2 independent human approvals per write via graph edges, an in-node guard, Redis distributed locking, and post-write verification</li>
-        <li>Protected budget reporting for ~170 contracts (~2,300 campaigns) by fixing a precision bug on endpoints serving ~550 req/day, preventing a ~$120/mo discrepancy, and fixing a row cap showing wrong top-10 rankings for 17 segments</li>
-        <li>Kept identity enrichment within budget via an Airflow DAG (~2,900 initial records) with idempotent reruns, billing error classification, and a global spend cap; dedupe saved ~$260 in repeat API charges</li>
+        <li>Zero duplicate or incorrect writes across rollout by requiring 2 independent human approvals per write, enforced via graph edges, an in-node guard, Redis distributed locking, and post-write verification</li>
+        <li>Protected budget reporting for ~170 contracts (~2,300 campaigns) by fixing a precision bug on endpoints serving ~550 req/day, and fixing a row cap showing wrong top-10 rankings for 17 segments</li>
+        <li>Kept identity enrichment within budget via an Airflow DAG (~2,900 initial records) with idempotent reruns, billing error classification, and a global spend cap; dedupe eliminated repeat API charges</li>
       </ul>
     </article>
 
@@ -184,9 +184,16 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
       <p class="meta">Jan 2026 – Jun 2026 · Remote</p>
       <ul class="points">
         <li>Led end-to-end infrastructure and frontend migration, stabilizing deployments and cutting codebase complexity 70%</li>
-        <li>Built a unified JSON-driven engine, replacing 50+ hardcoded files with 4 reusable systems for non-developer content creation</li>
+        <li>Built a unified JSON-driven engine, replacing 50+ hardcoded files with 4 reusable systems with automated schema validation, letting non-developers create lessons 5x faster</li>
         <li>Optimized performance via code splitting and Webpack prefetching, reducing the main JS bundle 87% for near-instant navigation</li>
-        <li>Implemented standardized components and automated schema validation, preserving structural integrity while accelerating lesson creation 5x</li>
+      </ul>
+    </article>
+
+    <article>
+      <h3>Undergraduate Researcher, BMCC</h3>
+      <p class="meta">2026 – Present · Prof. Vasiliy Znamenskiy · New York, NY</p>
+      <ul class="points">
+        <li>Run HPC computational chemistry (Gaussian 16) on TACC Stampede3 via Slurm; wrote C++17/Python tools that extract final geometries and warm-restart long optimizations</li>
       </ul>
     </article>
   </section>
