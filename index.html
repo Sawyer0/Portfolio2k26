@@ -200,6 +200,10 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
         <li>Run HPC computational chemistry (Gaussian 16) on TACC Stampede3 via Slurm; wrote C++17/Python tools that extract final geometries and warm-restart long optimizations</li>
       </ul>
     </article>
+    <article>
+      <h3>Earlier: Executive Assistant, Goldman Sachs and Crédit Agricole</h3>
+      <p class="meta">2022 – 2025 · New York, NY</p>
+    </article>
   </section>
 
 </main>
@@ -213,6 +217,7 @@ const projectDetails = {
     title: "PromptShield",
     meta: "LLM security tooling · TypeScript CLI and Go gateway",
     description: "A developer-first security toolkit that scans AI traffic and datasets for prompt injection, jailbreaks, PII leaks, and compliance violations.",
+    result: "Every request is checked before it reaches the model, and each block or allow decision streams live to an operator dashboard.",
     stack: "TypeScript · Node.js · Go · Envoy · gRPC · PostgreSQL · Redis · NATS · Kafka · OpenTelemetry · React",
     media: { video: "/images/projects/promptshield.mp4", poster: "/images/projects/promptshield.webp", alt: "PromptShield gateway dashboard: decisions stream in live as prompts are checked, with blocked prompt-injection and AWS-key requests, then a blocked request opened in the detail panel", width: 960, height: 600 },
     links: [
@@ -225,6 +230,7 @@ const projectDetails = {
     title: "Project DJA",
     meta: "CUNY Hackathon AI Innovation Challenge · FastAPI and React",
     description: "A compliance-aware AI academic advisor for CUNY students that validates course plans against visa and financial-aid requirements.",
+    result: "The AI's plan is rechecked against TAP and F-1 credit minimums after it answers, with credits taken from the catalog, never the model. The live demo returns a compliant plan in about 5 seconds.",
     stack: "Python · FastAPI · SQLAlchemy · SQLite · React · TypeScript · Vite · Claude, Gemini and Groq APIs",
     media: { video: "/images/projects/dja.mp4", poster: "/images/projects/dja.webp", alt: "Project DJA advisor: a TAP student enters a career goal and gets a live AI course plan for Spring 2027, 15 credits and compliance cleared", width: 960, height: 600 },
     links: [["Live demo", "https://project-dja.vercel.app"], ["Source", "https://github.com/Sawyer0/ai-innovation-challenge_software-track"]]
@@ -233,6 +239,7 @@ const projectDetails = {
     title: "Lemonade",
     meta: "AI vehicle diagnostics · Next.js and React Native",
     description: "An AI vehicle diagnostics app that helps drivers understand car problems through live video and chat.",
+    result: "Browser database reads moved behind authenticated API routes, and an end-to-end suite runs the signed-in flow against Firebase emulators in CI.",
     stack: "TypeScript · Next.js 16 · React Native (Expo) · Firebase · Vertex AI (Gemini) · LiveKit Agents · XState · Stripe",
     media: { video: "/images/projects/lemonade.mp4", poster: "/images/projects/lemonade.webp", alt: "Lemonade web app on demo data: the garage with a 2003 Honda Accord, its service history of two diagnostic sessions, then one session opened in the diagnosis screen", width: 960, height: 600 },
     links: [["Source", "https://github.com/Sawyer0/lemonade"]]
@@ -241,6 +248,7 @@ const projectDetails = {
     title: "Cisco IOx MCP Server",
     meta: "Model Context Protocol server · Bun and TypeScript",
     description: "An MCP server that lets AI agents manage Cisco DevNet IOx sandboxes, deployments, reservations, and runtime logs.",
+    result: "Agents drive IOx sandboxes over stdio, and Zod schemas validate every tool input before any call reaches Cisco.",
     stack: "TypeScript · Bun · MCP SDK · Zod · Cisco IOx",
     media: { video: "/images/projects/cisco-iox-mcp.mp4", poster: "/images/projects/cisco-iox-mcp.webp", alt: "Terminal replay of the Cisco IOx MCP server over stdio: tools/list returns 14 tools, then list_apps and get_app_metrics report hello_iox running", width: 960, height: 600 },
     links: [["Source", "https://github.com/Sawyer0/ciscoiox-mcp"]]
@@ -249,6 +257,7 @@ const projectDetails = {
     title: "Listrum",
     meta: "Landing page · Next.js 15",
     description: "Landing page for Listrum, edge ransomware detection for hospital networks that runs on existing Cisco infrastructure.",
+    result: "Rebuilt server-first: mobile Lighthouse performance went from 68 to 99, LCP from 3.7 s to 1.8 s, and initial JS from 172 kB to 113 kB.",
     stack: "TypeScript · Next.js 15 · React 18 · Tailwind CSS 4",
     media: { video: "/images/projects/listrum.mp4", poster: "/images/projects/listrum.webp", alt: "Listrum landing page at desktop width: the hero with its live device inventory, then a scroll through the visibility gap and detection sections", width: 960, height: 600 },
     links: [["Live site", "https://listrum.info"]]
@@ -302,6 +311,7 @@ function showProject(projectId) {
   dialogContent.innerHTML = `
     <p class="meta">${project.meta}</p>
     <p>${project.description}</p>
+    <p>${project.result}</p>
     <p class="stack">${project.stack}</p>
     <ul class="links">${project.links.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener">${label}</a></li>`).join("")}</ul>`;
   dialog.showModal();
