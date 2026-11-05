@@ -61,6 +61,9 @@ dialog::backdrop{background:#00000055;backdrop-filter:blur(2px)}
 .project-detail{padding:clamp(1.25rem,4vw,2rem)}
 .project-detail h2{margin:0 2.5rem .35rem 0;border:0;padding:0;color:var(--fg);font-size:1.35rem;letter-spacing:0;text-transform:none}
 .project-detail .meta{margin:0 0 1.25rem}
+.project-media{margin:1.75rem 0 1.25rem}
+.project-media[hidden]{display:none}
+.project-media video{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:16/10;border:1px solid var(--rule);border-radius:.5rem;background:var(--code)}
 .project-detail .points{display:grid;gap:.65rem;margin:1.25rem 0;padding-left:1.2rem}
 .project-detail .points li{margin:0;padding-left:.2rem}
 .project-detail .stack{margin:1.25rem 0 0;padding-top:1rem;border-top:1px solid var(--rule)}
@@ -126,6 +129,7 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
 <dialog id="project-dialog" aria-labelledby="project-dialog-title">
   <button class="dialog-close" type="button" aria-label="Close project details">×</button>
   <div class="project-detail">
+    <figure class="project-media" hidden><video id="project-dialog-video" muted loop playsinline preload="none" width="960" height="600"></video></figure>
     <h2 id="project-dialog-title"></h2>
     <div id="project-dialog-content"></div>
   </div>
@@ -210,6 +214,7 @@ const projectDetails = {
     meta: "LLM security tooling · TypeScript CLI and Go gateway",
     description: "A developer-first security toolkit that scans AI traffic and datasets for prompt injection, jailbreaks, PII leaks, and compliance violations.",
     stack: "TypeScript · Node.js · Go · Envoy · gRPC · PostgreSQL · Redis · NATS · Kafka · OpenTelemetry · React",
+    media: { video: "/images/projects/promptshield.mp4", poster: "/images/projects/promptshield.webp", alt: "PromptShield gateway dashboard: decisions stream in live as prompts are checked, with blocked prompt-injection and AWS-key requests, then a blocked request opened in the detail panel", width: 960, height: 600 },
     links: [
       ["CLI source", "https://github.com/Sawyer0/promptshield-mvp"],
       ["Gateway source", "https://github.com/Sawyer0/promptshield-beta"],
@@ -221,6 +226,7 @@ const projectDetails = {
     meta: "CUNY Hackathon AI Innovation Challenge · FastAPI and React",
     description: "A compliance-aware AI academic advisor for CUNY students that validates course plans against visa and financial-aid requirements.",
     stack: "Python · FastAPI · SQLAlchemy · SQLite · React · TypeScript · Vite · Claude, Gemini and Groq APIs",
+    media: { video: "/images/projects/dja.mp4", poster: "/images/projects/dja.webp", alt: "Project DJA advisor: a student picks the Computer Science program, sets TAP aid and a career goal, and gets a compliance-cleared course plan for Spring 2027", width: 960, height: 600 },
     links: [["Source", "https://github.com/Sawyer0/ai-innovation-challenge_software-track"]]
   },
   lemonade: {
@@ -235,6 +241,7 @@ const projectDetails = {
     meta: "Model Context Protocol server · Bun and TypeScript",
     description: "An MCP server that lets AI agents manage Cisco DevNet IOx sandboxes, deployments, reservations, and runtime logs.",
     stack: "TypeScript · Bun · MCP SDK · Zod · Cisco IOx",
+    media: { video: "/images/projects/cisco-iox-mcp.mp4", poster: "/images/projects/cisco-iox-mcp.webp", alt: "Terminal replay of the Cisco IOx MCP server over stdio: tools/list returns 14 tools, then list_apps and get_app_metrics report hello_iox running", width: 960, height: 600 },
     links: [["Source", "https://github.com/Sawyer0/ciscoiox-mcp"]]
   },
   listrum: {
@@ -242,6 +249,7 @@ const projectDetails = {
     meta: "Landing page · Next.js 15",
     description: "Landing page for Listrum, edge ransomware detection for hospital networks that runs on existing Cisco infrastructure.",
     stack: "TypeScript · Next.js 15 · React 18 · Tailwind CSS 4",
+    media: { video: "/images/projects/listrum.mp4", poster: "/images/projects/listrum.webp", alt: "Listrum landing page at desktop width: the hero with its live device inventory, then a scroll through the visibility gap and detection sections", width: 960, height: 600 },
     links: [["Live site", "https://listrum.info"]]
   }
 };
@@ -249,6 +257,42 @@ const projectDetails = {
 const dialog = document.querySelector("#project-dialog");
 const dialogTitle = document.querySelector("#project-dialog-title");
 const dialogContent = document.querySelector("#project-dialog-content");
+const dialogMedia = document.querySelector(".project-media");
+const dialogVideo = document.querySelector("#project-dialog-video");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function showMedia(media) {
+  if (!media) {
+    dialogMedia.hidden = true;
+    return;
+  }
+  dialogVideo.width = media.width;
+  dialogVideo.height = media.height;
+  dialogVideo.setAttribute("aria-label", media.alt);
+  dialogVideo.poster = media.poster;
+  dialogMedia.hidden = false;
+  if (reducedMotion.matches) {
+    dialogVideo.controls = true;
+    dialogVideo.autoplay = false;
+    dialogVideo.preload = "none";
+    dialogVideo.src = media.video;
+  } else {
+    dialogVideo.controls = false;
+    dialogVideo.autoplay = true;
+    dialogVideo.preload = "auto";
+    dialogVideo.src = media.video;
+    dialogVideo.play().catch(() => { dialogVideo.controls = true; });
+  }
+}
+
+function unloadMedia() {
+  dialogVideo.pause();
+  dialogVideo.removeAttribute("src");
+  dialogVideo.removeAttribute("poster");
+  dialogVideo.preload = "none";
+  dialogVideo.load();
+  dialogMedia.hidden = true;
+}
 
 function showProject(projectId) {
   const project = projectDetails[projectId];
@@ -260,6 +304,7 @@ function showProject(projectId) {
     <p class="stack">${project.stack}</p>
     <ul class="links">${project.links.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener">${label}</a></li>`).join("")}</ul>`;
   dialog.showModal();
+  showMedia(project.media);
 }
 
 document.querySelectorAll("[data-project]").forEach((button) => {
@@ -267,6 +312,7 @@ document.querySelectorAll("[data-project]").forEach((button) => {
 });
 
 document.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
+dialog.addEventListener("close", unloadMedia);
 dialog.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
 });
