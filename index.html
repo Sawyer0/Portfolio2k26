@@ -76,6 +76,16 @@ dialog::backdrop{background:#00000055;backdrop-filter:blur(2px)}
 @media (max-width:30rem){dl{grid-template-columns:1fr}dd{margin-bottom:.5rem}}
 @media (max-width:64rem){.desktop-project-nav,.profile-nav{display:none}main>.mobile-section{display:block}}
 @media (max-width:42rem){body{display:flex;flex-direction:column}header,main,footer{width:100%;margin-inline:0}.mobile-section[aria-labelledby="skills"] dl{grid-template-columns:max-content 1fr;gap:.5rem .75rem}.mobile-section[aria-labelledby="skills"] dt:nth-child(7),.mobile-section[aria-labelledby="skills"] dd:nth-child(8){order:1}.mobile-section[aria-labelledby="skills"] dt:nth-child(1),.mobile-section[aria-labelledby="skills"] dd:nth-child(2){order:2}.mobile-section[aria-labelledby="skills"] dt:nth-child(3),.mobile-section[aria-labelledby="skills"] dd:nth-child(4){order:3}.mobile-section[aria-labelledby="skills"] dt:nth-child(9),.mobile-section[aria-labelledby="skills"] dd:nth-child(10){order:4}.mobile-section[aria-labelledby="skills"] dt:nth-child(5),.mobile-section[aria-labelledby="skills"] dd:nth-child(6){order:5}.project-nav{padding-inline:1.25rem}.project-nav .project-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.15rem 1rem}.project-button{white-space:normal;text-align:left}main{order:2}footer{order:5}}
+.work{margin:2rem 0 0}
+.work h2{margin:0 0 .75rem}
+.work-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.75rem}
+.work-tile{display:block;width:100%;border:0;background:transparent;color:var(--fg);cursor:pointer;font:inherit;font-size:.82rem;line-height:1.3;padding:0;text-align:left}
+.work-tile img{display:block;width:100%;height:auto;aspect-ratio:16/10;border:1px solid var(--rule);border-radius:.4rem;background:var(--code);transition:border-color 160ms ease-out,transform 160ms ease-out}
+.work-tile span{display:block;margin-top:.35rem}
+.work-tile:hover img,.work-tile:focus-visible img{border-color:var(--muted)}
+.work-tile:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:.4rem}
+.work-tile:active img{transform:scale(.98)}
+@media (max-width:42rem){.work{padding-inline:0}.work-list{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:9.5rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.5rem}.work-list li{scroll-snap-align:start}}
 footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padding-top:1rem;color:var(--muted);font-size:.85rem}
 .skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:var(--bg);padding:.5rem}
 @media print{a{color:inherit}h2{margin-top:1.5rem}footer{display:none}}
@@ -96,17 +106,6 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
     </ul>
   </nav>
 </header>
-
-<aside class="desktop-project-nav" aria-labelledby="desktop-projects-title">
-  <h2 id="desktop-projects-title">Projects</h2>
-  <div class="project-list">
-    <button class="project-button" type="button" data-project="promptshield">PromptShield</button>
-    <button class="project-button" type="button" data-project="dja">Project DJA</button>
-    <button class="project-button" type="button" data-project="lemonade">Lemonade</button>
-    <button class="project-button" type="button" data-project="cisco">Cisco IOx MCP</button>
-    <button class="project-button" type="button" data-project="listrum">Listrum</button>
-  </div>
-</aside>
 
 <aside class="profile-nav" aria-label="Skills and education">
   <section>
@@ -147,6 +146,17 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
     <p>I design and ship agentic systems, from production AI agents to the orchestration, state and guardrails that keep them correct. My agents run on explicit graphs, with human approval, locking and verification on every write, so they hold up under real traffic. I keep the architecture simple enough to reason about and the frontends fast.</p>
   </section>
 
+  <section class="work" aria-labelledby="work">
+    <h2 id="work">Projects</h2>
+    <ul class="work-list">
+      <li><button class="work-tile" type="button" data-project="promptshield"><img src="/images/projects/promptshield-thumb.webp" alt="" width="320" height="200" decoding="async"><span>PromptShield</span></button></li>
+      <li><button class="work-tile" type="button" data-project="dja"><img src="/images/projects/dja-thumb.webp" alt="" width="320" height="200" decoding="async"><span>Project DJA</span></button></li>
+      <li><button class="work-tile" type="button" data-project="lemonade"><img src="/images/projects/lemonade-thumb.webp" alt="" width="320" height="200" decoding="async"><span>Lemonade</span></button></li>
+      <li><button class="work-tile" type="button" data-project="cisco"><img src="/images/projects/cisco-iox-mcp-thumb.webp" alt="" width="320" height="200" decoding="async"><span>Cisco IOx MCP</span></button></li>
+      <li><button class="work-tile" type="button" data-project="listrum"><img src="/images/projects/listrum-thumb.webp" alt="" width="320" height="200" decoding="async"><span>Listrum</span></button></li>
+    </ul>
+  </section>
+
   <section class="mobile-section" aria-labelledby="skills">
     <h2 id="skills">Skills</h2>
     <dl>
@@ -157,17 +167,6 @@ footer{margin-top:4rem;padding-bottom:3rem;border-top:1px solid var(--rule);padd
       <dt>Testing</dt><dd>Jest, Vitest, JSON Schema (AJV)</dd>
     </dl>
   </section>
-
-  <details class="project-nav mobile-section">
-    <summary><h2 id="project-nav-title">Projects</h2></summary>
-    <div class="project-list">
-      <button class="project-button" type="button" data-project="promptshield">PromptShield</button>
-      <button class="project-button" type="button" data-project="dja">Project DJA</button>
-      <button class="project-button" type="button" data-project="lemonade">Lemonade</button>
-      <button class="project-button" type="button" data-project="cisco">Cisco IOx MCP</button>
-      <button class="project-button" type="button" data-project="listrum">Listrum</button>
-    </div>
-  </details>
 
   <section aria-labelledby="experience">
     <h2 id="experience">Experience</h2>
